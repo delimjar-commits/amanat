@@ -20,10 +20,10 @@ export default function AdminLayout() {
         contentStyle: { backgroundColor: role.background },
       }}
     >
-      <Stack.Protected guard={!signedIn}>
+      <Stack.Protected guard={!signedIn} redirectTo="/admin">
         <Stack.Screen name="sign-in" options={{ headerShown: false, title: 'Staff sign-in' }} />
       </Stack.Protected>
-      <Stack.Protected guard={signedIn}>
+      <Stack.Protected guard={signedIn} redirectTo="/admin/sign-in">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="action/[id]" options={{ title: 'Review' }} />
         <Stack.Screen name="deal/[id]" options={{ title: 'Deal' }} />

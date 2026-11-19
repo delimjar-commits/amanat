@@ -42,12 +42,12 @@ function RootStack() {
           contentStyle: { backgroundColor: role.background },
         }}
       >
-        {/* The admin app has its own sign-in (password + authenticator code). */}
-        <Stack.Screen name="admin" options={{ headerShown: false }} />
-        <Stack.Protected guard={!signedIn}>
+        {/* Each guard says where to send people. Without redirectTo, Expo Router falls back to the first open
+            route in file order, which is "admin", so everyone signed out landed on the staff sign-in. */}
+        <Stack.Protected guard={!signedIn} redirectTo="/">
           <Stack.Screen name="welcome" options={{ headerShown: false }} />
         </Stack.Protected>
-        <Stack.Protected guard={signedIn}>
+        <Stack.Protected guard={signedIn} redirectTo="/welcome">
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="listing/[id]" options={{ title: 'Listing' }} />
           <Stack.Screen name="deal/[id]" options={{ title: 'Deal' }} />
@@ -64,6 +64,9 @@ function RootStack() {
           <Stack.Screen name="edit-profile" options={{ title: 'Edit profile' }} />
           <Stack.Screen name="my-listings" options={{ title: 'My listings' }} />
         </Stack.Protected>
+        {/* The admin app has its own sign-in (password + authenticator code). Only reached through /admin
+            or the "Staff sign-in" link, never as a fallback. */}
+        <Stack.Screen name="admin" options={{ headerShown: false }} />
       </Stack>
     </View>
   );
