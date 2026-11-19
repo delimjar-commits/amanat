@@ -1,3 +1,7 @@
 node_modules/
 .env
 *.log
+
+# The web build keeps its fonts and icons under assets/node_modules: ship them.
+!server/public/app/assets/node_modules/
+!server/public/app/assets/node_modules/**
