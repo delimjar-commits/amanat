@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "Amanat",
+    "slug": "amanat",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "amanat",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.amanat.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#009CFF",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "package": "com.amanat.app",
+      "softwareKeyboardLayoutMode": "resize",
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "output": "single",
+      "name": "Amanat",
+      "shortName": "Amanat",
+      "themeColor": "#009CFF",
+      "backgroundColor": "#FFFFFF"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-secure-store",
+      "expo-font",
+      "expo-web-browser",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Amanat uses the camera for your NID check, live selfie and handover photos.",
+          "photosPermission": "Amanat lets you add photos to your listings."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Amanat saves your location with handover proofs and SOS alerts."
+        }
+      ]
+    ],
+    "splash": {
+      "backgroundColor": "#FFFFFF"
+    },
+    "experiments": {
+      "typedRoutes": false,
+      "baseUrl": "/app"
+    }
+  }
+}
