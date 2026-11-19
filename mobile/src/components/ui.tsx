@@ -79,7 +79,7 @@ export function Page({
         gap,
       }}
       keyboardShouldPersistTaps="handled"
-      keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+      keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : Platform.OS === 'web' ? 'none' : 'on-drag'}
       automaticallyAdjustKeyboardInsets
       refreshControl={refreshControl}
     >

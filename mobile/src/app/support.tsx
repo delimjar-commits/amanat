@@ -58,7 +58,7 @@ export default function Support() {
         keyExtractor={(_, i) => String(i)}
         style={{ flex: 1 }}
         keyboardShouldPersistTaps="handled"
-        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : Platform.OS === 'web' ? 'none' : 'on-drag'}
         contentContainerStyle={[column, { paddingHorizontal: gutter, paddingVertical: 12, gap: 8 }]}
         ListFooterComponent={
           <View style={{ marginBottom: 8 }}>

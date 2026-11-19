@@ -89,7 +89,7 @@ export default function ChatScreen() {
         style={{ flex: 1 }}
         contentContainerStyle={[column, { paddingHorizontal: gutter, paddingVertical: 12, gap: 6 }]}
         keyboardShouldPersistTaps="handled"
-        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : Platform.OS === 'web' ? 'none' : 'on-drag'}
         ListFooterComponent={
           <View style={{ marginBottom: 8 }}>
             <Notice icon="lock-closed" text="Keep the deal and payment inside Amanat. We never ask for your OTP or PIN." />

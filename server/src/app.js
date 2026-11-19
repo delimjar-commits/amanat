@@ -117,7 +117,12 @@ export function createApp() {
 
   // static: landing page, user app (/app), admin app (/admin), downloads
   app.use('/download', express.static(path.join(pub, 'download'), { setHeaders: (res, p) => { if (p.endsWith('.apk')) res.set('content-type', 'application/vnd.android.package-archive'); } }));
-  for (const [mount, dir] of [['/app', 'app'], ['/admin', 'admin']]) {
+  // The admin app is part of the same web build, at /app/admin. /admin is the short link to it.
+  app.get(['/admin', '/admin/{*rest}'], (req, res) => {
+    const rest = req.params.rest ? `/${[].concat(req.params.rest).join('/')}` : '';
+    res.redirect(302, `/app/admin${rest}`);
+  });
+  for (const [mount, dir] of [['/app', 'app']]) {
     const d = path.join(pub, dir);
     app.use(mount, express.static(d, { index: 'index.html', maxAge: '1h', setHeaders: (res, p) => { if (p.endsWith('index.html')) res.set('cache-control', 'no-cache'); } }));
     app.get(`${mount}/{*rest}`, (req, res, next) => {

@@ -4,7 +4,8 @@ import { useFonts } from 'expo-font';
 import { router, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SystemUI from 'expo-system-ui';
-import { ActivityIndicator, View } from 'react-native';
+import { useEffect } from 'react';
+import { ActivityIndicator, Platform, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { WakeBanner, WakeScreen } from '../components/ServerWake';
 import { AppHeader } from '../components/ui';
@@ -68,7 +69,31 @@ function RootStack() {
   );
 }
 
+// Web: when the phone keyboard opens the page gets shorter. Keep the box being typed in on screen,
+// the way the Android and iPhone apps do.
+function useKeepFocusedFieldVisible() {
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof window === 'undefined') return;
+    const vv = window.visualViewport;
+    const onResize = () => {
+      const el = document.activeElement as HTMLElement | null;
+      if (!el || !/^(INPUT|TEXTAREA)$/.test(el.tagName)) return;
+      const h = vv ? vv.height : window.innerHeight;
+      const r = el.getBoundingClientRect();
+      if (r.bottom > h - 8 || r.top < 0) el.scrollIntoView({ block: 'center', behavior: 'auto' });
+    };
+    const target: any = vv || window;
+    target.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize);
+    return () => {
+      target.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+}
+
 export default function RootLayout() {
+  useKeepFocusedFieldVisible();
   const [fontsLoaded] = useFonts({ DMSans_400Regular, DMSans_500Medium, DMSans_600SemiBold, DMSans_700Bold, DMSans_800ExtraBold, DMSans_900Black, Anton_400Regular });
   return (
     <SafeAreaProvider>
